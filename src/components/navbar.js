@@ -1,9 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState ,useContext} from "react";
+import { Link ,useNavigate} from "react-router-dom";
+import {Dropdown} from "react-bootstrap";
 import { NavHashLink as NavLink } from 'react-router-hash-link';
+import { AuthContext } from "../store/Context";
+import { FirebaseContext } from "../store/Context";
+
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
+  const {user} = useContext(AuthContext);
+  const {firebase} = useContext(FirebaseContext);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -39,14 +46,45 @@ const Navbar = () => {
               </ul>
 
               <form class="d-flex">
-                <button class="btn  btn-style" type="submit">
+                <span>
+                  {user ? 
+                  <span></span>
+                  :
                   <Link  to="/signup">
-                    Sign Up
+                    <button class="btn  btn-style" type="submit">
+                     Sign Up
+                    </button>
+                  </Link> 
+                  }
+                </span>
+
+                <span>
+                  {user 
+                  ?
+                  <Dropdown >
+                  <Dropdown.Toggle variant="transparent" id="dropdown-basic" className="btn  btn-style">
+                    {user.displayName}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu >
+                    <Dropdown.Item className="logoutBtn" 
+                    onClick={ () =>{
+                                      firebase.auth().signOut();
+                                      navigate("/");
+                                    }}> 
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                  </Dropdown>
+                   :
+                   <Link  to="/login" >
+                     <button class="btn  btn-style btn-style-border" type="submit">
+                      Log In
+                      </button>
                     </Link>
-                </button>
-                <button class="btn  btn-style btn-style-border" type="submit">
-                <Link  to="/login" >Log in</Link>
-                </button>
+                  }
+                </span>
+                
               </form>
             </div>
           </div>

@@ -52,7 +52,11 @@ const Contact = () => {
       } else {
         alert("Please fill the data");
       }
-    } else {
+    }
+    else if(isNaN(phone)){
+      alert("Enter valid mobile number")
+    }
+    else {
       alert("Please fill the data");
     }
   };
@@ -108,7 +112,7 @@ const Contact = () => {
                     <div className="row">
                       <div className="col-12 col-lg-6 contact-input-feild">
                         <input
-                          type="text"
+                          type="tel"
                           name="phone"
                           id=""
                           className="form-control"
@@ -119,7 +123,7 @@ const Contact = () => {
                       </div>
                       <div className="col-12 col-lg-6 contact-input-feild">
                         <input
-                          type="text"
+                          type="email"
                           name="email"
                           id=""
                           className="form-control"

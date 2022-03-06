@@ -13,6 +13,24 @@ const streams = [
   { label: "Science", value: "science" },
 ];
 
+// const streams=[];
+
+// db.collection(
+//   `ugcourse/ugcourse_document/stream`
+// )
+//   .get()
+//   .then((querySnapshot) => {
+//     querySnapshot.forEach((doc) => {
+//       console.log(doc.data());
+//       streams.push(
+//         {
+//          label: doc.data().collection,
+//          value:doc.data().collection
+//         })
+  
+//     });
+//   })
+
 
 const CourseSelect = () => {
 
@@ -40,7 +58,7 @@ const CourseSelect = () => {
                 })
               setTable([...arr]);
             });
-          }) .catch ((err) => {
+          }).catch ((err) => {
             console('err', err)
           })
       });
@@ -48,31 +66,40 @@ const CourseSelect = () => {
   };
  
   return (<div>
+    <div className="work-container ">
+      <div className="select-div">
+      <label className="label">Course</label>
       <MultiSelect
         options={options}
         value={selected}
         labelledBy="Select"
+        className="multiselect"
         onChange = {(value) => {
           setSelected(value);
           setStream([]);
-        }}
+        } 
+      }
       />
+      </div>
+
+      <div className="select-div">
+      <label className="label">Stream</label>
       <MultiSelect
         options={streams}
         value={stream}
+        className="multiselect"
         labelledBy="Select"
         onChange = {(value) => {
           setStream(value);
           loadCourses(selected, value);
         }}
       />
-
+      </div>
+      
+    </div>
       
      <section className="service-main-container" id="services" >
         <div className="container service-container">
-          <h1 className="main-heading text-center fw-bold">
-           explore
-          </h1>
           <div className="row">
             
           {table.map((user, index) => {

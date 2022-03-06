@@ -1,24 +1,23 @@
-import React from "react";
+import React from 'react'
 
-const Header = () => {
+const Banner = (props) => {
   return (
-    <>
-      <header id="home" className="header1">
-        <section className="container main-hero-container">
+    <header className='banner'>
+        <section className="container banner-container">
           <div className="row">
             <div className="col-12 col-lg-6 header-left-side d-flex justify-content-center flex-column align-items-start ">
               <h1 className="display-2">
-                The right path <br /> towards your career.
+                {props.title}<br/>
+                {props.subtitle}
               </h1>
               <p className="main-hero-para">
-              Are you still figuring out what next after school ?
-              Well, then you are here at the right spot.
+              {props.desc}
               </p>
             </div>
             {/*  --------------- main header right side--------------  */}
-            <div className="col-12 col-lg-6 header-right-side d-flex justify-content-center align-items-center main-herosection-images">
+            <div className="col-12 col-lg-6 header-right-side d-flex justify-content-center align-items-center main-herosection-images banner-img">
               <img
-                src="./images/hero1.png"
+                src={props.img}
                 alt="heroimg"
                 className="img-fluid"
               />
@@ -27,8 +26,7 @@ const Header = () => {
           </div>
         </section>
       </header>
-    </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Banner

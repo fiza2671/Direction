@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
+import Select from 'react-select';
 import {db} from "../firebase/config";
 import { Container } from "react-bootstrap";
 
@@ -59,7 +60,7 @@ const CollegeSelect = () => {
   };
  
   return (<div>
-      <MultiSelect
+      <Select
         options={streams}
         value={stream}
         labelledBy="Select"

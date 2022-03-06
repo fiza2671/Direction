@@ -125,14 +125,14 @@ h6 {
 
 /* --------------------------------- Hero sEction  starts  
                         -------------------------------------------------------*/
-header {
+.header1 {
   background-color:var(--bgcolor);
   min-height: 100vh;
   width: 100%;
 }
 
 .main-hero-container {
-  height: 80vh;
+  height: 50vh;
   display: flex;
   
 
@@ -607,6 +607,67 @@ z-index: 99; /* Make sure it does not overlap */
 
 }
 
-/* --------------------------------- mentor 
+/* --------------------------------- banner
                         -------------------------------------------------------*/
 
+.banner{
+    background-color:var(--bgcolor);
+    min-height: 70vh;
+    width: 100%;
+}
+
+.banner-container {
+  height: 60vh;
+  display: flex;
+}
+
+.banner-container h1 {
+  text-transform: capitalize;
+  font-weight: bolder;
+}
+
+.banner-img img{
+  margin-top: 10rem;
+  position: absolute;
+}
+/* --------------------------------- banner ends
+                        -------------------------------------------------------*/
+ 
+/* ---------------------------------select begins
+                -------------------------------------------------------*/
+
+.multiselect{
+  width:60%;
+  margin-right:auto;
+  margin-left:auto;  
+}
+.select-div{
+  margin-bottom: 10px;
+}
+.label{
+  font-size: 1.5rem;
+  color: var(--text-color);
+  font-weight: normal;
+ 
+}
+.work-container {
+  width: 50vw;
+  padding: 5rem;
+  margin-right:auto;
+  margin-left:auto; 
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+  margin-top: -10rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
+
+@media only screen and (max-width: 480px) {
+  .work-container{
+    margin-top: 0px;
+    width:100vw;
+  }
+  .multiselect{
+    width:100%;}
+}
+/* ---------------------------------select ends
+                -------------------------------------------------------*/

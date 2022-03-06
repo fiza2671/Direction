@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
+<<<<<<< HEAD
 import Select from 'react-select';
+=======
+>>>>>>> 3eb536584141ccc26bf47213a30bf7a13e392f7b
 import {db} from "../firebase/config";
 import { Container } from "react-bootstrap";
 
@@ -60,7 +63,11 @@ const CollegeSelect = () => {
   };
  
   return (<div>
+<<<<<<< HEAD
       <Select
+=======
+      <MultiSelect
+>>>>>>> 3eb536584141ccc26bf47213a30bf7a13e392f7b
         options={streams}
         value={stream}
         labelledBy="Select"
@@ -115,4 +122,8 @@ const CollegeSelect = () => {
   );
 }
 
+<<<<<<< HEAD
 export default CollegeSelect
+=======
+export default CollegeSelect
+>>>>>>> 3eb536584141ccc26bf47213a30bf7a13e392f7b

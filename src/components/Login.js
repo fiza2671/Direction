@@ -40,10 +40,11 @@ const Login = () => {
   const handleGoogleSignIn = async (e) => {
     e.preventDefault();
     firebase.auth().signInWithPopup( googleAuthProvider ).then((result) =>{
-        firebase.firestore().collection("users").add({
+        firebase.firestore().collection("user_auth").doc(result.user.uid).set({
           id : result.user.uid,
-          username : user
-        }).then( () => {
+        },
+          { merge: true }
+        ).then( () => {
             navigate("/");
         
       })
@@ -62,55 +63,70 @@ const Login = () => {
 
   return (
     <>
-    <body className="formBody">
-   
-     <Container style={{ width: "400px" }}>
-      <Row>
-        <Col>
-          <div className="p-4 box">
-        
-          <h2 className="mb-3 text-center">Login</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
+  <header id="home" className="header1">
+        <section className="container main-hero-container">
+          <div className="row">
+            <div className="col-12 col-lg-6 header-left-side d-flex justify-content-center flex-column align-items-start ">
+            <Container style={{ width: "400px" }}>
+            <Row>
+              <Col>
+                <div className="p-4 box">
+              
+                  <h2 className="mb-3 text-center">Login</h2>
+            
+                <Form onSubmit={handleSubmit} >
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Control
+                    className="form-input"
+                      type="email"
+                      placeholder="Email address"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Form.Group>
 
-          <Form onSubmit={handleSubmit} >
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control
-                type="email"
-                placeholder="Email address"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Control
+                    className="form-input"
+                      type="password"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-
-            <div className="d-grid gap-2 formButton">
-              <Button variant="primary" type="Submit">
-                Log In
-              </Button>
+                  <div className="d-grid gap-2 formButton">
+                    <Button  className="signup-btn mt-4" type="Submit">
+                      Log In
+                    </Button>
+                  </div>
+                </Form>
+                <hr />
+                <div>
+                  <GoogleButton
+                    className="g-btn"
+                    type="dark"
+                    onClick={handleGoogleSignIn}
+                  />
+                </div>
+                </div>
+              <div className="p-4 box mt-3 text-center frm-txt">
+                Don't have an account? <Link to="/signup" className="link">Sign up</Link>
+              </div>
+          </Col>
+        </Row>
+      </Container> 
             </div>
-          </Form>
-          <hr />
-          <div>
-            <GoogleButton
-              className="g-btn"
-              type="dark"
-              onClick={handleGoogleSignIn}
-            />
+            {/*  --------------- main header right side--------------  */}
+            <div className="col-12 col-lg-6 header-right-side d-flex justify-content-center align-items-center main-herosection-images text-center">
+              <img
+                src="./images/hero1.png"
+                alt="heroimg"
+                className="img-fluid"
+              />
+              
+            </div>
           </div>
-          </div>
-        <div className="p-4 box mt-3 text-center">
-          Don't have an account? <Link to="/signup">Sign up</Link>
-        </div>
-        </Col>
-      </Row>
-    </Container>    
-  </body>
+        </section>
+      </header>
   </>
   );
 };

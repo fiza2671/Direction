@@ -22,10 +22,10 @@ const Mentor = () => {
   <>
      <section className="service-main-container" id="services" >
         <div className="container service-container">
-
-          <h1 className="main-heading text-center fw-bold">
-           Connect with our mentors
+        <h1 className="main-heading text-center fw-bold">
+           Book your session
           </h1>
+         
 
           <div className="row">
 
@@ -43,6 +43,7 @@ const Mentor = () => {
                    <br/>
                     <h2 className="sub-heading">{user.Name}</h2>
                     <p className="main-hero-para">{user.Description}</p>
+                    <br/>
                     <button class="btn  btn-style btn-style-border" type="submit" onClick={onClick}>Book Now</button>
                     </div>
                 </>

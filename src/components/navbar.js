@@ -34,14 +34,14 @@ const Navbar = () => {
                 <li class="nav-item">
                  <Link to="/" class="nav-link active " aria-current="page">Home</Link>
                 </li>
-                <li class="nav-item">
-                  <NavLink to="/#about" className={"nav-link"}>About</NavLink>
+                <li class="nav-item ">
+                  <NavLink to="/#about" className={"nav-link active"}>About</NavLink>
                 </li>
                 <li class="nav-item">
-                <NavLink to="/#services"  className={"nav-link"}>Services</NavLink>
+                <NavLink to="/#services"  className={"nav-link active"}>Services</NavLink>
                 </li>
                 <li class="nav-item">
-                <NavLink to="/#contact" className={"nav-link"}>Contact</NavLink>               
+                <NavLink to="/#contact" className={"nav-link active"}>Contact</NavLink>               
                 </li>
               </ul>
 
@@ -60,6 +60,7 @@ const Navbar = () => {
 
                 <span>
                   {user 
+
                   ?
                   <Dropdown >
                   <Dropdown.Toggle variant="transparent" id="dropdown-basic" className="btn  btn-style">
@@ -69,12 +70,19 @@ const Navbar = () => {
                   <Dropdown.Menu >
                     <Dropdown.Item className="logoutBtn" 
                     onClick={ () =>{
+                                      navigate("/User");
+                                    }}> 
+                      User Dashboard
+                    </Dropdown.Item>
+                    <Dropdown.Item className="logoutBtn" 
+                    onClick={ () =>{
                                       firebase.auth().signOut();
                                       navigate("/");
                                     }}> 
                       Logout
                     </Dropdown.Item>
                   </Dropdown.Menu>
+
                   </Dropdown>
                    :
                    <Link  to="/login" >

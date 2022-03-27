@@ -1,36 +1,12 @@
 import React, { useState } from "react";
-import { MultiSelect } from "react-multi-select-component";
+import Select from 'react-select';
 import {db} from "../firebase/config";
-import { Container } from "react-bootstrap";
+import courseapi from "../API/courseApi";
 
 const options = [
   { label: "UG", value: "ugcourse" },
   { label: "PG", value: "pgcourse" },
 ];
-
-const streams = [
-  { label: "Arts", value: "arts" },
-  { label: "Science", value: "science" },
-];
-
-// const streams=[];
-
-// db.collection(
-//   `ugcourse/ugcourse_document/stream`
-// )
-//   .get()
-//   .then((querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       console.log(doc.data());
-//       streams.push(
-//         {
-//          label: doc.data().collection,
-//          value:doc.data().collection
-//         })
-  
-//     });
-//   })
-
 
 const CourseSelect = () => {
 
@@ -38,13 +14,11 @@ const CourseSelect = () => {
   const [stream, setStream] = useState([]);
   const [table, setTable] = useState([]);
   
- 
   const loadCourses = (sel, str) => {
     let arr = []
-    sel.forEach((selectedItem) => {
-      str.forEach((streamItem) => {
+   
          db.collection(
-          `${selectedItem["value"]}/${selectedItem["value"]}_document/stream/stream_document/${streamItem["value"]}`
+          `${sel["value"]}/${sel["value"]}_document/stream/stream_document/${str["value"]}`
         )
           .get()
           .then((querySnapshot) => {
@@ -59,17 +33,16 @@ const CourseSelect = () => {
               setTable([...arr]);
             });
           }).catch ((err) => {
-            console('err', err)
+            <div>No Results Found</div>
           })
-      });
-    });
+     
   };
  
   return (<div>
     <div className="work-container ">
       <div className="select-div">
       <label className="label">Course</label>
-      <MultiSelect
+      <Select
         options={options}
         value={selected}
         labelledBy="Select"
@@ -84,11 +57,10 @@ const CourseSelect = () => {
 
       <div className="select-div">
       <label className="label">Stream</label>
-      <MultiSelect
-        options={streams}
+      <Select
+        options={courseapi}
         value={stream}
         className="multiselect"
-        labelledBy="Select"
         onChange = {(value) => {
           setStream(value);
           loadCourses(selected, value);
@@ -100,19 +72,31 @@ const CourseSelect = () => {
       
      <section className="service-main-container" id="services" >
         <div className="container service-container">
-          <div className="row">
-            
-          {table.map((user, index) => {
+          <div className="row table_div">
+            <table className="tables">
+              <thead>
+                <tr className="main-hero-para col-heading">
+                  <th>Program Name</th>
+                  <th>Eligibility</th>
+                  <th>Duration (years)</th>
+                  <th>Fees</th>
+                </tr>
+              </thead>
+              <tbody>
+              {table.map((user, index) => {
                 return (
-                  <Container key={index}>
-                    <div className="col-11 col-lg-4 col-xxl-4 work-container-subdiv">
-                      <br />
-                      <h2 className="sub-heading">{user.Program}</h2>
-                      <p className="main-hero-para">{user.Eligibility}</p>
-                    </div>
-                  </Container>
-                );
+                <tr className="table-row">
+                  <td >{user.Program}</td>
+                  <td className="td">{user.Eligibility}</td>
+                  <td>{user.Duration}</td>
+                  <td>{user.Fee}</td>
+                </tr>);
               })}
+
+              </tbody>
+            </table>
+
+
           </div>
         </div>
       </section>

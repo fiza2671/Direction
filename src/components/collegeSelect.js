@@ -1,28 +1,21 @@
 import React, { useState } from "react";
-import { MultiSelect } from "react-multi-select-component";
 import Select from 'react-select';
 import {db} from "../firebase/config";
-import { Container } from "react-bootstrap";
+import collegeapi from "../API/collegeApi";
 
 const streams = [
     { label: "Arts", value: "arts" },
     { label: "Science", value: "science" },
   ];
-  
-  const science = [
-    { label: "Maths", value: "maths" },
-    { label: "Physics", value: "physics" },
-  ];
 
-  const arts = [
-    { label: "English", value: "english" },
-    { label: "History", value: "history" },
-  ];
-  
   const location = [
     { label: "Delhi", value: "delhi" },
     { label: "Kerala", value: "kerala" },
-  ]
+    { label: "Chennai", value: "chennai" },
+    { label: "Mumbai", value: "mumbai" },
+    { label: "Bangalore", value: "bangalore" },
+    { label: "Pune", value: "pune" },
+  ];
 
 const CollegeSelect = () => {
   
@@ -30,86 +23,111 @@ const CollegeSelect = () => {
     const [program, setProgram] = useState([]);
     const [place,setPlace] = useState([]);
     const [table, setTable] = useState([]);
+    const [programs, setPrograms] = useState([]);
   
- 
-  const loadCollege = (str, pr , loc) => {
+
+    const loadCollege = (str, pr , loc) => {
     let arr = []
-    str.forEach((selectedStream) => {
-        pr.forEach((streamItem) => {
-            loc.forEach((location) => {
-                db.collection(
-          `${selectedStream["value"]}/${selectedStream["value"]}_doc/college/college_doc/${streamItem["value"]}/${streamItem["value"]}/${location["value"]}`
-        )
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              arr.push(
-                {
-                  CollegeName: doc.data().name,
-                  Rating: doc.data().rating,
-                  Website: doc.data().site,
-                })
-              setTable([...arr]);
-            });
-          }) .catch ((err) => {
-            console('err', err)
-          })
-      });
-    });
-    });
-  };
+              db.collection(
+        `college/streams/${str["value"]}/${str["value"]}_doc/${pr["value"]}/${pr["value"]}/${loc["value"]}`
+              )
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            arr.push(
+              {
+                CollegeName: doc.data().name,
+                Rating: doc.data().rating,
+                Website: doc.data().site,
+              })
+            setTable([...arr]);
+          });
+        }) .catch ((err) => {
+          console('err', err)
+        })
+};
+
+
  
-  return (<div>
-<<<<<<< HEAD
+  return (
+  <div>
+    <div className="work-container ">
+
+      <div className="select-div">
+      <label className="label">Stream</label>
       <Select
-=======
-      <MultiSelect
->>>>>>> 3eb536584141ccc26bf47213a30bf7a13e392f7b
         options={streams}
         value={stream}
         labelledBy="Select"
+        className="multiselect"
         onChange = {(value) => {
-          setStream(value);  
-        }}
-      />
-     <MultiSelect
-        options={science}
-        value={program}
-        labelledBy="Select"
-        onChange = {(value) => {
-          setProgram(value);
+          setStream(value);
+          setPrograms(collegeapi[value['value']]);
+          setProgram([]) ;
+          setPlace([]);        
         }}
         />
+      </div>
       
-      <MultiSelect
+
+      <div className="select-div">
+      <label className="label">Program</label>
+     <Select     
+        options={programs}
+        value={program}
+        labelledBy="Select"
+        className="multiselect"
+        onChange = {(value) => {
+          setProgram(value);
+          setPlace([])
+        }}
+        />
+        </div> 
+     
+      <div className="select-div">
+      <label className="label">Location</label>
+      <   Select
         options={location}
         value={place}
         labelledBy="Select"
+        className="multiselect"
         onChange = {(value) => {
           setPlace(value);
           loadCollege(stream, program ,value);
         }}
         />
+        </div>
+
+    </div>
 
       
-     <section className="service-main-container" id="services" >
+    <section className="service-main-container" id="services" >
         <div className="container service-container">
-          <h1 className="main-heading text-center fw-bold">
-           explore
-          </h1>
-          <div className="row">
-            
-          {table.map((user, index) => {
+          <div className="row table_div">
+            <table class="tables">
+              <thead>
+                <tr className="main-hero-para col-heading">
+                  <th>College Name</th>
+                  <th>Rating*</th>
+                  <th>College Site</th>
+                </tr>
+              </thead>
+              <tbody>
+              {table.map((item, index) => {
                 return (
-                  <Container key={index}>
-                    <div className="col-11 col-lg-4 col-xxl-4 work-container-subdiv">
-                      <br />
-                      <h2 className="sub-heading">{user.CollegeName}</h2>
-                      <p className="main-hero-para">{user.Rating}</p>
-                    </div>
-                  </Container>
-                );
+                <tr className="table-row">
+                  <td >{item.CollegeName}</td>
+                  <td >{item.Rating}</td>
+                  {item.Website?<td><a href={item.Website} target="_blank"><span  className="link">Know More</span></a></td>:<td></td>}
+                  </tr>);
+             
               })}
+              <span className="form-alert">*College ratings are based on user ratings available on the internet</span>
+
+              </tbody>
+            </table>
+
+
           </div>
         </div>
       </section>
@@ -118,8 +136,6 @@ const CollegeSelect = () => {
   
   );
 }
-
-
 
 export default CollegeSelect
 

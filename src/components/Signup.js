@@ -12,6 +12,7 @@ const Signup = () => {
   const [user, setUser] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // const { signUp } = useUserAuth();
 
@@ -24,10 +25,11 @@ const Signup = () => {
     try{
     firebase.auth().createUserWithEmailAndPassword(email, password).then((result) =>{
       result.user.updateProfile({displayName:user}).then( () =>{
-        firebase.firestore().collection("users").add({
+        firebase.firestore().collection("user_auth").doc(result.user.uid).set({
           id : result.user.uid,
-          username : user
-        }).then( () => {
+   
+  
+        }, { merge: true }).then( () => {
             navigate("/login");
         })
       })
@@ -36,19 +38,6 @@ const Signup = () => {
     setError(err.message);
   }
 
-
-
-
-
-
-
-    // setError("");
-    // try {
-    //   // await signUp(email, password);
-    //   navigate("/");
-    // } catch (err) {
-    //   setError(err.message);
-    // }
   };
 
   return (
@@ -67,6 +56,7 @@ const Signup = () => {
 
         <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Control
+            className="form-input"
               type="text"
               placeholder="Username"
               value={user}
@@ -76,30 +66,54 @@ const Signup = () => {
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
+            className="form-input"
               type="email"
               placeholder="Email address"
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-1" controlId="formBasicPassword">
             <Form.Control
+            className="form-input"
               type="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => 
+                setPassword(e.target.value)
+              }
             />
           </Form.Group>
 
+          {password.length<8?
+          <span className="form-alert">Password should have a minimum of 8 characters</span> 
+          :
+          <span></span>}
+
+          <Form.Group className="mb-1 mt-3" controlId="formBasicPassword">
+            <Form.Control
+            className="form-input"
+              type="password"
+              placeholder="Confirm Password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </Form.Group>
+
+          {password !== confirmPassword
+          ?
+          <span className="form-alert">Re-enter the same password</span>
+            :<span></span>
+          }
+
           <div className="d-grid gap-2">
-            <Button variant="primary" type="Submit">
+            <Button  type="Submit" className="signup-btn mt-4">
               Sign up
             </Button>
           </div>
 
         </Form>
       </div>
-      <div className="p-4 box mt-3 text-center">
-        Already have an account? <Link to="/login">Log In</Link>
+      <div className="p-4 box mt-3 text-center frm-txt">
+        Already have an account? <Link to="/login" className="link">Log In</Link>
       </div>
       </Col></Row>
       </Container>

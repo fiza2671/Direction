@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import validator from 'validator';
 
 const Contact = () => {
   const [userData, setUserData] = useState({
@@ -10,6 +11,7 @@ const Contact = () => {
   });
 
   let name, value;
+
   const postUserData = (event) => {
     name = event.target.name;
     value = event.target.value;
@@ -22,7 +24,7 @@ const Contact = () => {
     event.preventDefault();
     const { firstName, lastName, phone, email,  message } = userData;
 
-    if (firstName && lastName && phone && email && message) {
+  if (firstName && lastName && phone && email && message) {
       const res = fetch(
         "https://direction-1940d-default-rtdb.asia-southeast1.firebasedatabase.app/userDataRecords.json",
         {
@@ -39,8 +41,23 @@ const Contact = () => {
           }),
         }
       );
+      if(isNaN(phone)){
+        alert("Enter valid mobile number")
+      }
+      else if(validator.isEmail(email) !== 'true'){
+        alert('Enter valid Email!')
+      }
 
-      if (res) {
+      // else if(email){
+      //   if (validator.isEmail(email)) {
+      //     alert("")
+      //   } else {
+      //     alert('Enter valid Email!')
+      //   }}
+      else if(phone.length != 10){
+        alert("Enter valid mobile number")
+      }
+     else if (res) {
         setUserData({
           firstName: "",
           lastName: "",
@@ -49,16 +66,13 @@ const Contact = () => {
           message: "",
         });
         alert("Data Stored");
-      } else {
-        alert("Please fill the data");
-      }
-    }
-    else if(isNaN(phone)){
-      alert("Enter valid mobile number")
-    }
-    else {
-      alert("Please fill the data");
-    }
+      }   
+      
+  }
+  else {
+    alert("Please fill all fields");
+  }
+  
   };
 
   return (

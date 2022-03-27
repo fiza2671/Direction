@@ -24,7 +24,7 @@ const serviceapi = [
     id: 4,
     logo: "fas fa-pen-fancy",
     title: "EXAMINATION",
-    info: "Find the various examinations across the country for which you can appear for.",
+    info: "Find various examinations across the country for which you can appear for.",
     link:"/Exam",},
   {
     id: 5,

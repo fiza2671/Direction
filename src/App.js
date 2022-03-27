@@ -13,6 +13,8 @@ import Exam from "./pages/Exam";
 import Mentors from "./pages/Mentors";
 import Job from "./pages/Job";
 import Error from "./pages/Error";
+import User from "./pages/User";
+
 
 
 
@@ -41,6 +43,7 @@ const App = () => {
         <Route path="/Exam" element={<Exam/>}/>
         <Route path="/Job" element={<Job/>}/>
         <Route path="/Mentor" element={<Mentors/>}/>
+        <Route path="/User" element={<User/>}/>
         <Route element={<Error/>}/>
       </Routes>
     </>
